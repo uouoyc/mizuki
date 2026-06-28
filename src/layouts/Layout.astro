@@ -1,4 +1,5 @@
 ---
+import Analytics from "@vercel/analytics/astro";
 import { Font } from "astro:assets";
 import { PageProgressBar } from "@components/control/PageProgressBar";
 import Pio from "@components/features/pio/Pio.astro";
@@ -211,6 +212,8 @@ const bannerHeightHome = BANNER_HEIGHT + BANNER_HEIGHT_EXTEND;
 			title={profileConfig.name}
 			href={`${Astro.site}rss.xml`}
 		/>
+
+		<Analytics />
 	</head>
 	<body
 		class="min-h-screen"
