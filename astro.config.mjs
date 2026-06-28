@@ -32,6 +32,29 @@ import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkFixGithubAdmonitions } from "./src/plugins/remark-fix-github-admonitions.js";
 import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 
+const featurePagePaths = {
+	anime: "/anime",
+	diary: "/diary",
+	friends: "/friends",
+	projects: "/projects",
+	skills: "/skills",
+	timeline: "/timeline",
+	albums: "/albums",
+	devices: "/devices",
+};
+
+const disabledFeaturePagePaths = Object.entries(siteConfig.featurePages)
+	.filter(([, enabled]) => !enabled)
+	.map(([page]) => featurePagePaths[page])
+	.filter(Boolean);
+
+const shouldIncludeSitemapPage = (page) => {
+	const { pathname } = new URL(page);
+	return !disabledFeaturePagePaths.some(
+		(path) => pathname === path || pathname.startsWith(`${path}/`),
+	);
+};
+
 // https://astro.build/config
 export default defineConfig({
 	fonts: [
@@ -168,7 +191,9 @@ export default defineConfig({
 		svelte({
 			preprocess: vitePreprocess(),
 		}),
-		sitemap(),
+		sitemap({
+			filter: shouldIncludeSitemapPage,
+		}),
 		mdx(),
 	],
 	markdown: {
