@@ -6,6 +6,8 @@ import type { SidebarLayoutConfig } from "../types/config";
  * sidebar: 控制组件所在的侧边栏（left 或 right）。注意：移动端通常不显示右侧栏内容。若组件设置在 right，请确保 layout.position 为 "both"。
  */
 export const sidebarLayoutConfig: SidebarLayoutConfig = {
+	stickyMode: "section", // column=整列粘住，section=只让 sticky 分组粘住
+
 	// 侧边栏组件属性配置列表
 	properties: [
 		{
@@ -31,7 +33,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 		{
 			// 组件类型：侧栏音乐组件
 			type: "music-sidebar",
-			position: "sticky",
+			position: "top",
 			class: "onload-animation",
 			animationDelay: 100,
 		},
@@ -39,7 +41,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// 组件类型：分类组件
 			type: "categories",
 			// 组件位置："sticky" 表示粘性定位，可滚动
-			position: "sticky",
+			position: "top",
 			// CSS 类名
 			class: "onload-animation",
 			// 动画延迟时间
@@ -69,7 +71,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// 组件类型：卡片式目录组件
 			type: "card-toc",
 			// 组件位置
-			position: "sticky",
+			position: "top",
 			// CSS 类名
 			class: "onload-animation",
 			// 动画延迟时间
@@ -99,9 +101,9 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 
 	// 侧栏组件布局配置
 	components: {
-		left: ["profile", "announcement", "tags", "card-toc"],
-		right: ["site-stats", "calendar", "categories", "music-sidebar"],
-		drawer: ["profile", "announcement", "music-sidebar", "categories", "tags"],
+		left: ["profile", "music-sidebar", "tags", "categories"],
+		right: ["site-stats", "calendar"],
+		drawer: ["profile", "music-sidebar", "tags", "categories"],
 	},
 
 	// 默认动画配置

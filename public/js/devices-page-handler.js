@@ -30,8 +30,13 @@
 	}
 
 	function createDeviceCardHTML(device, index, viewDetailsText) {
+		const description = device.description
+			? '<p class="text-sm text-black/60 dark:text-white/60 leading-relaxed line-clamp-2 mt-3">' +
+				escapeHtml(device.description) +
+				"</p>"
+			: "";
 		const imgSection =
-			'<div class="relative p-6 pb-0"><div class="flex justify-center items-center h-48 bg-linear-to-br from-(--card-bg) to-(--btn-regular-bg) rounded-lg overflow-hidden relative"><div class="absolute inset-0 bg-(--primary)/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><img src="' +
+			'<div class="relative p-6 pb-0"><div class="flex justify-center items-center aspect-square bg-linear-to-br from-(--card-bg) to-(--btn-regular-bg) rounded-lg overflow-hidden relative"><div class="absolute inset-0 bg-(--primary)/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><img src="' +
 			escapeHtml(device.image) +
 			'" alt="' +
 			escapeHtml(device.name) +
@@ -40,11 +45,11 @@
 		const infoSection =
 			'<div class="p-6 pt-4 relative z-10"><div class="flex items-start justify-between mb-3"><h3 class="text-lg font-bold text-black/90 dark:text-white/90 group-hover:text-(--primary) transition-colors duration-300">' +
 			escapeHtml(device.name) +
-			'</h3><div class="p-1.5 rounded-full bg-(--primary)/10 text-(--primary) opacity-0 group-hover:opacity-100 transition-opacity duration-300"><svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></div></div><div class="mb-4"><div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--btn-regular-bg)] text-black/70 dark:text-white/70 text-sm mb-3"><svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg><span class="font-medium">' +
+			'</h3><div class="p-1.5 rounded-full bg-(--primary)/10 text-(--primary) opacity-0 group-hover:opacity-100 transition-opacity duration-300"><svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></div></div><div><div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--btn-regular-bg)] text-black/70 dark:text-white/70 text-sm"><svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg><span class="font-medium">' +
 			escapeHtml(device.specs) +
-			'</span></div><p class="text-sm text-black/60 dark:text-white/60 leading-relaxed line-clamp-2">' +
-			escapeHtml(device.description) +
-			'</p></div><div class="flex items-center justify-between pt-3 border-t border-(--line-divider) border-dashed opacity-0 group-hover:opacity-100 transition-all duration-300"><span class="text-sm font-medium text-(--primary)">' +
+			'</span></div>' +
+			description +
+			'</div><div class="mt-0 flex max-h-0 translate-y-2 items-center justify-between overflow-hidden border-t border-(--line-divider) border-dashed pt-0 opacity-0 transition-all duration-300 group-hover:mt-4 group-hover:max-h-12 group-hover:translate-y-0 group-hover:pt-3 group-hover:opacity-100"><span class="text-sm font-medium text-(--primary)">' +
 			escapeHtml(viewDetailsText) +
 			'</span><svg class="w-5 h-5 text-(--primary)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg></div></div>';
 

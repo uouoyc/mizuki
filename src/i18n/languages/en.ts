@@ -133,7 +133,7 @@ export const en: Translation = {
 	[Key.albumsBackToList]: "Back to Albums",
 
 	// Devices Page
-	[Key.devices]: "My Devices",
+	[Key.devices]: "Devices",
 	[Key.devicesSubtitle]: "Here are the devices I use in my daily life",
 	[Key.devicesViewDetails]: "View Details",
 	[Key.albumsPhotoCount]: "photo",

@@ -95,6 +95,7 @@ export async function GET(context: APIContext) {
 		description: siteConfig.subtitle || "No description",
 		site: context.site,
 		items: feed,
+		trailingSlash: false,
 		customData: `<language>${siteConfig.lang}</language>`,
 	});
 }

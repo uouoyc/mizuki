@@ -61,7 +61,7 @@ export const zh_TW: Translation = {
 	[Key.diary]: "日記",
 
 	// 設備頁面
-	[Key.devices]: "我的設備",
+	[Key.devices]: "設備",
 	[Key.devicesSubtitle]: "這裡展示了我日常使用的各類設備",
 	[Key.devicesViewDetails]: "查看詳情",
 
@@ -137,7 +137,7 @@ export const zh_TW: Translation = {
 	[Key.albumsNoResults]: "沒有匹配的相冊",
 
 	// 專案展示頁面
-	[Key.projects]: "專案展示",
+	[Key.projects]: "專案",
 	[Key.projectsSubtitle]: "我的開發專案作品集",
 	[Key.projectsAll]: "全部",
 	[Key.projectsWeb]: "網頁應用",
@@ -203,7 +203,7 @@ export const zh_TW: Translation = {
 	[Key.atomCopyFailed]: "複製失敗，請手動複製鏈接",
 
 	// 技能展示頁面
-	[Key.skills]: "技能展示",
+	[Key.skills]: "技能",
 	[Key.skillsSubtitle]: "我的技術技能和專業知識",
 	[Key.skillsFrontend]: "前端開發",
 	[Key.skillsBackend]: "後端開發",

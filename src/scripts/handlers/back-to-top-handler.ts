@@ -11,6 +11,13 @@ import {
 } from "../core/swup-config";
 import { ScrollHandler } from "./scroll-handler";
 
+function getCssVh(name: string, fallback: number): number {
+	const parsed = Number.parseFloat(
+		getComputedStyle(document.documentElement).getPropertyValue(name).trim(),
+	);
+	return Number.isFinite(parsed) ? parsed : fallback;
+}
+
 /**
  * 返回顶部处理器类
  * 负责返回顶部按钮的显示/隐藏和滚动位置监听
@@ -25,6 +32,7 @@ export class BackToTopHandler {
 	private rafId: number | null = null;
 	private isInitialized = false;
 	private backToTopVisible = false;
+	private lastScrollTop = 0;
 
 	constructor(bannerEnabled: boolean) {
 		this.bannerEnabled = bannerEnabled;
@@ -87,7 +95,8 @@ export class BackToTopHandler {
 	 */
 	private handleScroll(): void {
 		const scrollTop = document.documentElement.scrollTop;
-		const bannerHeight = window.innerHeight * (BANNER_HEIGHT / 100);
+		const bannerHeight =
+			window.innerHeight * (getCssVh("--banner-height", BANNER_HEIGHT) / 100);
 
 		// 计算返回顶部按钮显示阈值
 		const showBackToTopThreshold = this.calculateShowThreshold(scrollTop);
@@ -101,7 +110,6 @@ export class BackToTopHandler {
 			this.updateBackToTopButton(scrollTop, showBackToTopThreshold);
 			this.updateTOCVisibility(scrollTop, bannerHeight);
 			this.updateNavbarVisibility(scrollTop);
-			this.updatePageOverlayScroll(scrollTop);
 			this.rafId = null;
 		});
 	}
@@ -114,7 +122,7 @@ export class BackToTopHandler {
 			SWUP_SELECTORS.contentWrapper.slice(1),
 		);
 		let threshold =
-			window.innerHeight * (BANNER_HEIGHT / 100) +
+			window.innerHeight * (getCssVh("--banner-height", BANNER_HEIGHT) / 100) +
 			SCROLL_CONFIG.backToTopOffset;
 
 		if (contentWrapper) {
@@ -175,38 +183,34 @@ export class BackToTopHandler {
 
 		if (document.body.classList.contains("fullscreen-banner")) {
 			this.navbar.classList.remove("navbar-hidden");
+			this.lastScrollTop = scrollTop;
 			return;
 		}
 
-		const currentBannerHeight = BANNER_HEIGHT_HOME;
+		const isHome =
+			document.body.classList.contains("lg:is-home") &&
+			window.innerWidth >= 1280;
+		const currentBannerHeight = isHome
+			? getCssVh("--banner-height-home", BANNER_HEIGHT_HOME)
+			: getCssVh("--banner-height", BANNER_HEIGHT);
 
 		const threshold =
 			window.innerHeight * (currentBannerHeight / 100) -
 			SCROLL_CONFIG.navbarHideOffset;
 
-		if (scrollTop >= threshold) {
-			this.navbar.classList.add("navbar-hidden");
-		} else {
+		const scrollDelta = scrollTop - this.lastScrollTop;
+		const isScrollingUp = scrollDelta < -4;
+		const isScrollingDown = scrollDelta > 4;
+		const revealOnScrollUp =
+			document.body.dataset.navbarRevealOnScrollUp !== "false";
+
+		if (scrollTop < threshold || (revealOnScrollUp && isScrollingUp)) {
 			this.navbar.classList.remove("navbar-hidden");
-		}
-	}
-
-	private updatePageOverlayScroll(scrollTop: number): void {
-		const overlay = document.getElementById("banner-page-overlay");
-		if (!overlay || !overlay.style.opacity) {
-			return;
+		} else if (isScrollingDown) {
+			this.navbar.classList.add("navbar-hidden");
 		}
 
-		const isFullscreen = document.body.classList.contains(
-			"fullscreen-banner",
-		);
-		const bannerHeight = isFullscreen
-			? window.innerHeight
-			: window.innerHeight * (BANNER_HEIGHT_HOME / 100);
-		const progress = Math.min(scrollTop / bannerHeight, 1);
-
-		overlay.style.opacity = String(1 - progress);
-		overlay.style.transform = `translateY(${-progress * 30}px) scale(${1 - progress * 0.05})`;
+		this.lastScrollTop = scrollTop;
 	}
 
 	/**
@@ -244,6 +248,7 @@ export class BackToTopHandler {
 		this.navbar = null;
 		this.isInitialized = false;
 		this.backToTopVisible = false;
+		this.lastScrollTop = 0;
 	}
 
 	/**

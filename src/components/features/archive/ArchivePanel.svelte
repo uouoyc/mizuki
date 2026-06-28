@@ -1,6 +1,7 @@
 <script lang="ts">
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
+import { getTagSlug } from "@utils/tag-utils";
 import { onMount } from "svelte";
 import type { ArchivePanelProps, Post, Group } from "./types";
 
@@ -34,7 +35,9 @@ onMount(async () => {
 		filteredPosts = filteredPosts.filter(
 			(post) =>
 				Array.isArray(post.data.tags) &&
-				post.data.tags.some((tag) => tags.includes(tag)),
+				post.data.tags.some(
+					(tag) => tags.includes(tag) || tags.includes(getTagSlug(tag)),
+				),
 		);
 	}
 

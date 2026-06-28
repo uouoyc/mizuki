@@ -4,7 +4,7 @@ export interface Device {
 	name: string;
 	image: string;
 	specs: string;
-	description: string;
+	description?: string;
 	link: string;
 }
 
@@ -14,23 +14,26 @@ export type DeviceCategory = Record<string, Device[]> & {
 };
 
 export const devicesData: DeviceCategory = {
-	OnePlus: [
+	Phone: [
 		{
-			name: "OnePlus 13T",
-			image: "/images/device/oneplus13t.webp",
-			specs: "Gray / 16G + 1TB",
-			description: "Flagship performance, Hasselblad imaging, 80W SuperVOOC.",
-			link: "https://www.oneplus.com/cn/13t",
+			name: "OPPO Find X8",
+			image: "/images/device/oppofindx8.png",
+			specs: "12GB + 256GB",
+			link: "https://www.oppo.com/",
+		},
+		{
+			name: "Redmi K30S Ultra",
+			image: "/images/device/redmik30sultra.png",
+			specs: "8GB + 128GB",
+			link: "https://www.mi.com/",
 		},
 	],
-	Router: [
+	Computer: [
 		{
-			name: "GL-MT3000",
-			image: "/images/device/mt3000.webp",
-			specs: "1000Mbps / 2.5G",
-			description:
-				"Portable WiFi 6 router suitable for business trips and home use.",
-			link: "https://www.gl-inet.cn/products/gl-mt3000/",
+			name: "ThinkBook 14+",
+			image: "/images/device/thinkbook14+.png",
+			specs: "16GB + 512GB",
+			link: "https://www.lenovo.com/",
 		},
 	],
 };

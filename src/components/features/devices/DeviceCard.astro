@@ -20,7 +20,7 @@ const { device, index, viewDetailsText } = Astro.props;
 	<!-- 设备图片区域 -->
 	<div class="relative p-6 pb-0">
 		<div
-			class="flex justify-center items-center h-48 bg-linear-to-br from-(--card-bg) to-(--btn-regular-bg) rounded-lg overflow-hidden relative"
+			class="flex justify-center items-center aspect-square bg-linear-to-br from-(--card-bg) to-(--btn-regular-bg) rounded-lg overflow-hidden relative"
 		>
 			<div
 				class="absolute inset-0 bg-(--primary)/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -63,9 +63,9 @@ const { device, index, viewDetailsText } = Astro.props;
 			</div>
 		</div>
 
-		<div class="mb-4">
+		<div>
 			<div
-				class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-(--btn-regular-bg) text-black/70 dark:text-white/70 text-sm mb-3"
+				class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-(--btn-regular-bg) text-black/70 dark:text-white/70 text-sm"
 			>
 				<svg
 					class="w-4 h-4"
@@ -89,16 +89,18 @@ const { device, index, viewDetailsText } = Astro.props;
 				<span class="font-medium">{device.specs}</span>
 			</div>
 
-			<p
-				class="text-sm text-black/60 dark:text-white/60 leading-relaxed line-clamp-2"
-			>
-				{device.description}
-			</p>
+			{
+				device.description && (
+					<p class="text-sm text-black/60 dark:text-white/60 leading-relaxed line-clamp-2 mt-3">
+						{device.description}
+					</p>
+				)
+			}
 		</div>
 
 		<!-- 查看详情按钮 -->
 		<div
-			class="flex items-center justify-between pt-3 border-t border-(--line-divider) border-dashed opacity-0 group-hover:opacity-100 transition-all duration-300"
+			class="mt-0 flex max-h-0 translate-y-2 items-center justify-between overflow-hidden border-t border-(--line-divider) border-dashed pt-0 opacity-0 transition-all duration-300 group-hover:mt-4 group-hover:max-h-12 group-hover:translate-y-0 group-hover:pt-3 group-hover:opacity-100"
 		>
 			<span class="text-sm font-medium text-(--primary)"
 				>{viewDetailsText}</span

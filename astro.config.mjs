@@ -42,13 +42,13 @@ export default defineConfig({
 			styles: ["normal", "italic"],
 		},
 		{
-			name: "ZenMaruGothic-Medium",
+			name: "SarasaGothicSC-Regular",
 			cssVariable: "--font-body",
 			provider: fontProviders.local(),
 			options: {
 				variants: [
 					{
-						src: ["./src/assets/fonts/ZenMaruGothic-Medium.ttf"],
+						src: ["./src/assets/fonts/SarasaGothicSC-Regular.ttf"],
 						weight: "500",
 						style: "normal",
 					},
@@ -75,7 +75,7 @@ export default defineConfig({
 
 	site: siteConfig.siteURL,
 	base: "/",
-	trailingSlash: "always",
+	trailingSlash: "never",
 	compressHTML: true,
 
 	output: "static",

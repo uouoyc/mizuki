@@ -79,6 +79,7 @@ const desktopTopComponents = showDesktop
 const desktopStickyComponents = showDesktop
 	? widgetManager.getComponentsByPosition("sticky", side, "desktop")
 	: [];
+const useColumnSticky = widgetManager.getConfig().stickyMode === "column";
 
 function renderComponent(
 	component: WidgetComponentConfig,
@@ -98,7 +99,14 @@ function renderComponent(
 }
 ---
 
-<div id={containerId} class:list={[rootClass, "sidebar-column-root"]}>
+<div
+	id={containerId}
+	class:list={[
+		rootClass,
+		"sidebar-column-root",
+		{ "sidebar-column-sticky": useColumnSticky },
+	]}
+>
 	<div class:list={["flex flex-col w-full gap-4 mb-4", topClass]}>
 		{
 			showMobile && mobileTopComponents.length > 0 && (
@@ -152,7 +160,8 @@ function renderComponent(
 	<div
 		id={stickyId}
 		class:list={[
-			"transition-all duration-700 flex flex-col w-full gap-4 sticky top-4 sidebar-sticky-column",
+			"transition-all duration-700 flex flex-col w-full gap-4 sidebar-sticky-column",
+			{ "sticky top-4": !useColumnSticky },
 			stickyClass,
 		]}
 	>
@@ -205,3 +214,21 @@ function renderComponent(
 		}
 	</div>
 </div>
+
+<style>
+	@media (width >= 1280px) {
+		.sidebar-column-sticky {
+			position: sticky;
+			top: 1rem;
+			align-self: start;
+			max-height: calc(100vh - 2rem);
+			overflow-y: auto;
+			scrollbar-width: none;
+			-ms-overflow-style: none;
+		}
+
+		.sidebar-column-sticky::-webkit-scrollbar {
+			display: none;
+		}
+	}
+</style>

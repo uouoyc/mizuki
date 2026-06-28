@@ -23,31 +23,21 @@ const getLevelText = (level: string) => {
 	}
 };
 
-const getLevelWidth = (level: string) => {
-	switch (level) {
-		case "expert":
-			return "100%";
-		case "advanced":
-			return "80%";
-		case "intermediate":
-			return "60%";
-		case "beginner":
-			return "40%";
-		default:
-			return "20%";
+const getLevelFromProficiency = (proficiency: number) => {
+	if (proficiency >= 90) {
+		return "expert";
 	}
+	if (proficiency >= 70) {
+		return "advanced";
+	}
+	if (proficiency >= 40) {
+		return "intermediate";
+	}
+	return "beginner";
 };
 
-const formatExperience = (exp: { years: number; months: number }) => {
-	const parts: string[] = [];
-	if (exp.years > 0) {
-		parts.push(`${exp.years} ${i18n(I18nKey.skillYears)}`);
-	}
-	if (exp.months > 0) {
-		parts.push(`${exp.months} ${i18n(I18nKey.skillMonths)}`);
-	}
-	return parts.join(" ");
-};
+const proficiency = Math.max(0, Math.min(100, skill.proficiency));
+const level = getLevelFromProficiency(proficiency);
 ---
 
 <div
@@ -79,11 +69,11 @@ const formatExperience = (exp: { years: number; months: number }) => {
 					<span
 						class="shrink-0 ml-2 px-2 py-0.5 text-xs rounded-md bg-(--primary)/10 text-(--primary) font-medium"
 					>
-						{getLevelText(skill.level)}
+						{getLevelText(level)}
 					</span>
 				</div>
 				<p class="text-xs text-black/50 dark:text-white/50">
-					{formatExperience(skill.experience)}
+					{i18n(I18nKey.skillLevel)} {proficiency}%
 				</p>
 			</div>
 		</div>
@@ -97,7 +87,7 @@ const formatExperience = (exp: { years: number; months: number }) => {
 		<div class="mt-3 w-full bg-(--btn-regular-bg) rounded-full h-1.5">
 			<div
 				class="h-1.5 rounded-full transition-all duration-500"
-				style={`width: ${getLevelWidth(skill.level)}; background-color: ${skillColor}`}
+				style={`width: ${proficiency}%; background-color: ${skillColor}`}
 			>
 			</div>
 		</div>

@@ -16,7 +16,6 @@ import {
 	BANNER_HEIGHT,
 	BANNER_HEIGHT_FULLSCREEN,
 } from "../constants/constants";
-import { formatDateToYYYYMMDD } from "../utils/date-utils";
 import {
 	calculateGridLayout,
 	getBannerImages,
@@ -54,9 +53,6 @@ const {
 	postSlug,
 	coverImage,
 	headings = [],
-	publishedDate,
-	category,
-	wordCount,
 } = Astro.props;
 const hasBannerCredit = siteConfig.banner.credit.enable;
 const hasBannerLink = !!siteConfig.banner.credit.url;
@@ -139,7 +135,7 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 	>
 		<div
 			id="navbar-wrapper"
-			class="pointer-events-auto sticky top-0 transition-all"
+			class="pointer-events-auto fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-(--page-width) px-0 md:px-4 transition-all"
 		>
 			<Navbar />
 		</div>
@@ -236,18 +232,6 @@ const defaultPostListLayout = siteConfig.postListLayout?.defaultMode || "list";
 						id="content-wrapper"
 						class="onload-animation transition-leaving"
 					>
-						<div
-							id="page-overlay-data"
-							data-title={title || ""}
-							data-date={publishedDate ? formatDateToYYYYMMDD(publishedDate) : ""}
-							data-category={category || ""}
-							data-words={wordCount ? String(wordCount) : ""}
-							data-is-post={postSlug ? "true" : "false"}
-							data-is-home={isHomePage ? "true" : "false"}
-							data-wallpaper-mode={siteConfig.wallpaperMode.defaultMode}
-							class="hidden"
-						>
-						</div>
 						<slot />
 						<div
 							class="footer col-span-full onload-animation hidden lg:block"

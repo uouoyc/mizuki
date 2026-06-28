@@ -9,7 +9,7 @@ import { getCategoryUrl, url } from "@/utils/url-utils";
 const categories = await getCategoryList();
 const totalPosts = (await getSortedPostsList()).length;
 const homeUrl = url("/");
-const archiveUrl = url("/archive/");
+const archiveUrl = url("/archive");
 ---
 
 <div

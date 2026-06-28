@@ -10,6 +10,7 @@ import type {
 export interface SiteConfig {
 	title: string;
 	subtitle: string;
+	description?: string;
 	siteURL: string; // 站点URL，以斜杠结尾，例如：https://mizuki.mysqil.com/
 	keywords?: string[]; // 站点关键词，用于生成 <meta name="keywords">
 	siteStartDate?: string; // 站点开始日期，格式：YYYY-MM-DD，用于计算运行天数
@@ -145,6 +146,7 @@ export interface SiteConfig {
 		};
 		navbar?: {
 			transparentMode?: "semi" | "full" | "semifull"; // 导航栏透明模式
+			revealOnScrollUp?: boolean; // 深度滚动后，上滑是否显示导航栏
 		};
 	};
 	toc: {
@@ -379,6 +381,7 @@ export interface WidgetComponentConfig {
 }
 
 export interface SidebarLayoutConfig {
+	stickyMode?: "column" | "section"; // column=整列粘滞，section=仅 sticky 分组粘滞
 	properties: WidgetComponentConfig[]; // 组件配置列表
 	components: {
 		left: WidgetComponentType[];

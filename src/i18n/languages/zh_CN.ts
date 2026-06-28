@@ -132,12 +132,12 @@ export const zh_CN: Translation = {
 	[Key.albumsNoResults]: "没有匹配的相册",
 
 	// 设备页面
-	[Key.devices]: "我的设备",
+	[Key.devices]: "设备",
 	[Key.devicesSubtitle]: "这里展示了我日常使用的各类设备",
 	[Key.devicesViewDetails]: "查看详情",
 
 	// 项目展示页面
-	[Key.projects]: "项目展示",
+	[Key.projects]: "项目",
 	[Key.projectsSubtitle]: "我的开发项目作品集",
 	[Key.projectsAll]: "全部",
 	[Key.projectsWeb]: "网页应用",
@@ -164,7 +164,7 @@ export const zh_CN: Translation = {
 	[Key.projectsGitHub]: "GitHub",
 
 	// 技能展示页面
-	[Key.skills]: "技能展示",
+	[Key.skills]: "技能",
 	[Key.skillsSubtitle]: "我的技术技能和专业知识",
 	[Key.skillsFrontend]: "前端开发",
 	[Key.skillsBackend]: "后端开发",

@@ -6,11 +6,11 @@ import ConfigCarrier from "@components/misc/ConfigCarrier.astro";
 import MusicPlayer from "@components/widgets/music-player/MusicPlayer.svelte";
 import { pioConfig, profileConfig, siteConfig } from "@/config";
 
-const BANNER_HEIGHT = 35;
-const BANNER_HEIGHT_EXTEND = 30;
-const BANNER_HEIGHT_HOME = BANNER_HEIGHT + BANNER_HEIGHT_EXTEND;
-
-import { PAGE_WIDTH } from "../constants/constants";
+import {
+	BANNER_HEIGHT,
+	BANNER_HEIGHT_EXTEND,
+	PAGE_WIDTH,
+} from "../constants/constants";
 import { pathsEqual, url } from "../utils/url-utils";
 import "../styles/main.css";
 import "../styles/mobile-navbar.css";
@@ -55,6 +55,8 @@ const configHue = siteConfig.themeColor.hue;
 // 获取导航栏透明模式配置
 const navbarTransparentMode =
 	siteConfig.banner?.navbar?.transparentMode || "semi";
+const navbarRevealOnScrollUp =
+	siteConfig.banner?.navbar?.revealOnScrollUp ?? true;
 
 // 判断是否应该显示顶部高光效果（只在full和semifull模式下显示）
 const shouldShowTopHighlight =
@@ -135,6 +137,7 @@ const bannerOffsetByPosition = {
 };
 const bannerOffset =
 	bannerOffsetByPosition[siteConfig.banner.position || "center"];
+const bannerHeightHome = BANNER_HEIGHT + BANNER_HEIGHT_EXTEND;
 
 // CSS 变量由 Astro Font API 自动注入，body 字体通过 Tailwind --font-body 应用
 ---
@@ -143,6 +146,7 @@ const bannerOffset =
 <html
 	lang={siteLang}
 	class="bg-(--page-bg) text-[14px] md:text-[16px]"
+	style={`--banner-height: ${BANNER_HEIGHT}vh; --banner-height-home: ${bannerHeightHome}vh;`}
 	data-overlayscrollbars-initialize
 	data-waves-config-enabled={siteConfig.banner?.waves?.enable ? "true" : "false"}
 	data-banner-title-config-enabled={siteConfig.banner?.homeText?.enable ? "true" : "false"}
@@ -211,9 +215,16 @@ const bannerOffset =
 	<body
 		class="min-h-screen"
 		class:list={[
-			{ "enable-banner": enableBanner, "enable-card-border": siteConfig.card?.border },
+			{
+				"lg:is-home": isHomePage,
+				"enable-banner": enableBanner,
+				"enable-card-border": siteConfig.card?.border,
+			},
 		]}
 
+		data-navbar-reveal-on-scroll-up={navbarRevealOnScrollUp
+			? "true"
+			: "false"}
 		data-overlayscrollbars-initialize
 	>
 		<noscript
@@ -249,25 +260,33 @@ const bannerOffset =
 	is:global
 	define:vars={{
 		bannerOffset,
-		"banner-height-home": `${BANNER_HEIGHT_HOME}vh`,
-		"banner-height": `${BANNER_HEIGHT}vh`,
 	}}
 >
 	@reference "../styles/main.css";
 
 	@layer components {
 		@media (width >= 1280px) {
-			.enable-banner #banner-wrapper {
+			.enable-banner.lg\:is-home #banner-wrapper {
 				height: var(--banner-height-home);
 				transform: translateY(var(--banner-height-extend));
 			}
 
-			.enable-banner #banner {
+			.enable-banner #banner-wrapper {
+				height: var(--banner-height-home);
+			}
+
+			.enable-banner.lg\:is-home #banner {
 				height: var(--banner-height-home);
 				transform: translateY(0);
 			}
-			.enable-banner #main-grid {
-				transform: translateY(var(--banner-height-extend));
+
+			.enable-banner #banner {
+				height: var(--banner-height-home);
+				transform: translateY(var(--bannerOffset));
+			}
+
+			.enable-banner.lg\:is-home #main-grid {
+				margin-top: var(--banner-height-extend);
 			}
 			.enable-banner #top-row {
 				height: calc(var(--banner-height-home) - 4.5rem);
@@ -292,17 +311,6 @@ const bannerOffset =
 		}
 	}
 	@layer utilities {
-		@media (width >= 1280px) {
-			.enable-banner #sidebar-sticky {
-				top: calc(1rem - var(--banner-height-extend)) !important;
-			}
-			.enable-banner #left-sidebar-sticky {
-				top: calc(1rem - var(--banner-height-extend)) !important;
-			}
-			.enable-banner #right-sidebar-sticky {
-				top: calc(1rem - var(--banner-height-extend)) !important;
-			}
-		}
 		.navbar-hidden {
 			@apply opacity-0 -translate-y-16;
 		}
