@@ -1,5 +1,5 @@
 ---
-title: Cloudflare 发布 Agent Readiness 工具：一键检测你的网站对 AI 代理够不够友好
+title: "Cloudflare 发布 Agent Readiness 工具：一键检测你的网站对 AI 代理够不够友好"
 published: 2026-04-18
 description: "Cloudflare 推出免费工具 isitagentready，可用于检测网站对于 AI 代理的友好度。涵盖可发现性、内容可访问性、协议发现等五大维度，并提供可直接复制的优化提示词。"
 image: "./cover.webp"

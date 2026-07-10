@@ -1,5 +1,5 @@
 ---
-title: 使用 Prettier 自动排序 Tailwind CSS 类名
+title: "使用 Prettier 自动排序 Tailwind CSS 类名"
 published: 2025-08-16
 description: "在项目中使用 Prettier 自动排序 Tailwind CSS 类名，提升代码可读性和一致性。"
 image: "./cover.webp"

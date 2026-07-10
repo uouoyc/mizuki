@@ -1,5 +1,5 @@
 ---
-title: Next.js 实现大文件分片上传、断点续传与秒传
+title: "Next.js 实现大文件分片上传、断点续传与秒传"
 published: 2025-12-02
 description: "利用队列调度实现高并发控制，通过 MD5 预检实现秒传与断点续传，使用流式合并确保低内存占用的大文件上传方案。"
 image: "./cover.webp"

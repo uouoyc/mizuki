@@ -1,5 +1,5 @@
 ---
-title: 使用 Scoop+Mise 搭建统一的 Windows 开发环境
+title: "使用 Scoop+Mise 搭建统一的 Windows 开发环境"
 published: 2026-02-03
 description: "使用 Scoop 和 Mise 在 Windows 上搭建一个非侵入式、版本隔离且代码化的开发环境。"
 image: "./cover.webp"

@@ -1,5 +1,5 @@
 ---
-title: 如何使用 Claude Code 搭建 SEO 工作流
+title: "如何使用 Claude Code 搭建 SEO 工作流"
 published: 2026-04-05
 description: "完整的 Claude Code SEO 工作流搭建指南，涵盖快速安装、全站审计、单页优化以及 Google API 接入，帮助开发者将 SEO 诊断整合到终端工作流中。"
 image: "./cover.webp"
