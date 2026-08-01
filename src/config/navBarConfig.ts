@@ -168,5 +168,6 @@ export const navBarConfig: NavBarConfig = {
 			url: "/friends",
 			icon: "material-symbols:group",
 		},
+		LinkPreset.AITools,
 	],
 };

@@ -27,6 +27,15 @@
 			]
 		},
 		{
+			"source": "/pio/live2d-host",
+			"headers": [
+				{
+					"key": "X-Frame-Options",
+					"value": "SAMEORIGIN"
+				}
+			]
+		},
+		{
 			"source": "/_astro/(.*)",
 			"headers": [
 				{

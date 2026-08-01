@@ -3,11 +3,11 @@ import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import { getSortedPosts } from "@utils/content-utils";
-import { formatDateToYYYYMMDD } from "@/utils/date-utils";
 import { initPostIdMap } from "@/utils/permalink-utils";
 import { getPostPublicDescription } from "@utils/post-card-content";
 import { getPostUrl } from "@/utils/url-utils";
 import { Icon } from "astro-icon/components";
+import { formatDateToYYYYMMDD } from "@/utils/date-utils";
 
 interface Props {
 	type: "rss" | "atom";

@@ -3,7 +3,7 @@ import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { getTagSlug } from "@utils/tag-utils";
 import { onMount } from "svelte";
-import type { ArchivePanelProps, Post, Group } from "./types";
+import type { ArchivePanelProps, Group, Post } from "./types";
 
 let {
 	tags = $bindable([]),
