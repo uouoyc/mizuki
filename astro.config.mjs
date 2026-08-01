@@ -56,6 +56,7 @@ const featurePagePaths = {
 	timeline: "/timeline",
 	albums: "/albums",
 	devices: "/devices",
+	aiTools: "/ai-tools",
 };
 
 const disabledFeaturePagePaths = Object.entries(siteConfig.featurePages)

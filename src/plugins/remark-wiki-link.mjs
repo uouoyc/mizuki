@@ -144,19 +144,19 @@ function globalPermalink(meta, metas, config) {
 
 function postUrl(meta, fallback, options, metas) {
 	if (typeof meta?.data.permalink === "string" && meta.data.permalink.trim()) {
-		return `/${meta.data.permalink.replace(/^\/+|\/+$/g, "")}/`;
+		return `/${meta.data.permalink.replace(/^\/+|\/+$/g, "")}`;
 	}
 	if (meta && options.permalink?.enable) {
-		return `/${globalPermalink(meta, metas, options.permalink)}/`;
+		return `/${globalPermalink(meta, metas, options.permalink)}`;
 	}
 	if (typeof meta?.data.alias === "string" && meta.data.alias.trim()) {
-		return `/posts/${meta.data.alias.replace(/^\/+|\/+$/g, "")}/`;
+		return `/posts/${meta.data.alias.replace(/^\/+|\/+$/g, "")}`;
 	}
 	const id = meta ? postId(meta) : fallback;
 	return `/posts/${id
 		.split("/")
 		.map((part) => encodeURIComponent(part))
-		.join("/")}/`;
+		.join("/")}`;
 }
 
 function parseValue(value) {

@@ -17,7 +17,7 @@ export const siteConfig: SiteConfig = {
 		fixed: false, // 对访问者隐藏主题色选择器
 	},
 
-	// 特色页面开关配置（关闭未使用的页面有助于提升 SEO，关闭后请记得在 navbarConfig 中移除对应链接）
+	// 特色页面开关配置（关闭后页面跳转 404 并从 sitemap 排除；Navbar 会自动隐藏映射中的对应链接）
 	featurePages: {
 		anime: true, // 番剧页面开关
 		diary: false, // 日记页面开关
@@ -27,7 +27,7 @@ export const siteConfig: SiteConfig = {
 		timeline: false, // 时间线页面开关
 		albums: false, // 相册页面开关
 		devices: true, // 设备页面开关
-		aiTools: true, // AI 工具页面开关
+		aiTools: false, // AI 工具页面开关
 	},
 
 	// 顶栏标题配置

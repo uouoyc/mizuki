@@ -150,14 +150,21 @@ describe("Markdown AST enhancements", () => {
 			children: [
 				{
 					type: "paragraph",
-					children: [{ type: "text", value: "[[image-grid-demo]]" }],
+					children: [
+						{
+							type: "text",
+							value:
+								"[[building-a-windows-development-environment-with-scoop-and-mise]]",
+						},
+					],
 				},
 				{
 					type: "paragraph",
 					children: [
 						{
 							type: "text",
-							value: "See [[image-grid-demo|extended syntax]].",
+							value:
+								"See [[building-a-windows-development-environment-with-scoop-and-mise|extended syntax]].",
 						},
 					],
 				},
@@ -166,6 +173,10 @@ describe("Markdown AST enhancements", () => {
 		remarkWikiLink()(tree);
 		assert.equal(tree.children[0].data.hName, "a");
 		assert.match(tree.children[0].data.hProperties.class, /card-wiki-link/);
+		assert.equal(
+			tree.children[0].data.hProperties.href,
+			"/posts/building-a-windows-development-environment-with-scoop-and-mise",
+		);
 		assert.equal(tree.children[1].children[1].type, "link");
 		assert.equal(
 			tree.children[1].children[1].children[0].value,

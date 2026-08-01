@@ -121,7 +121,7 @@ import { LinkPreset } from "../types/config";
  * ══════════════════════════════════════════════════════════════
  *
  * 1. 关闭特色页面后（siteConfig.featurePages），导航栏会自动隐藏对应链接，无需手动移除。
- * 2. 内部链接 URL 格式为 "/page-name/"（以斜杠开头和结尾）。
+ * 2. 内部链接 URL 格式为 "/page-name"（以斜杠开头，不以斜杠结尾）。
  * 3. 外部链接 URL 必须包含完整协议前缀（如 "https://"）。
  * 4. 导航栏在移动端会自动收拢为汉堡菜单，子菜单以折叠面板形式展示。
  * 5. links 数组的顺序即为导航栏从左到右的显示顺序。
@@ -168,6 +168,5 @@ export const navBarConfig: NavBarConfig = {
 			url: "/friends",
 			icon: "material-symbols:group",
 		},
-		LinkPreset.AITools,
 	],
 };
