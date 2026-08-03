@@ -37,12 +37,12 @@ const addFiles = useCallback(async (fileList: FileList) => {
     status: "pending", // 初始状态
     progress: 0,
     // ...其他属性
-  }))
+  }));
 
-  setFiles((prev) => [...prev, ...newFiles]) // 更新状态
-  queueRef.current.push(...newFiles) // 加入后台队列
-  processQueue() // 触发调度器
-}, [])
+  setFiles((prev) => [...prev, ...newFiles]); // 更新状态
+  queueRef.current.push(...newFiles); // 加入后台队列
+  processQueue(); // 触发调度器
+}, []);
 ```
 
 ### 文件级并发调度
@@ -61,18 +61,18 @@ const processQueue = useCallback(async () => {
     queueRef.current.length > 0 &&
     uploadingCountRef.current < UPLOAD_CONFIG.MAX_CONCURRENT_FILES
   ) {
-    const fileItem = queueRef.current.shift()
+    const fileItem = queueRef.current.shift();
     if (fileItem) {
-      uploadingCountRef.current++ // 占用并发名额
+      uploadingCountRef.current++; // 占用并发名额
 
       // 开始上传，无论成功失败，最后都要释放名额并尝试处理下一个
       uploadFile(fileItem).finally(() => {
-        uploadingCountRef.current--
-        processQueue() // 递归调用
-      })
+        uploadingCountRef.current--;
+        processQueue(); // 递归调用
+      });
     }
   }
-}, [uploadFile])
+}, [uploadFile]);
 ```
 
 ## 预处理（MD5 计算）
@@ -93,27 +93,27 @@ const processQueue = useCallback(async () => {
 
 ```ts
 // libs/md5.ts
-const spark = new SparkMD5.ArrayBuffer()
-const fileReader = new FileReader()
+const spark = new SparkMD5.ArrayBuffer();
+const fileReader = new FileReader();
 
 // 定义读取时的分片大小 (2MB)
 // 注意：这个大小只影响读取时内存占用，不影响最终上传的分片大小
-const chunkSize = 2 * 1024 * 1024
+const chunkSize = 2 * 1024 * 1024;
 
-let currentChunk = 0
-const chunks = Math.ceil(file.size / chunkSize)
+let currentChunk = 0;
+const chunks = Math.ceil(file.size / chunkSize);
 
 fileReader.onload = (e) => {
   // 将读取到的二进制数据追加到 MD5 计算器中
-  spark.append(e.target.result)
-  currentChunk++
+  spark.append(e.target.result);
+  currentChunk++;
 
   if (currentChunk < chunks) {
-    loadNext() // 继续读取下一片
+    loadNext(); // 继续读取下一片
   } else {
-    resolve(spark.end()) // 全部读取完成，返回最终的 MD5 字符串
+    resolve(spark.end()); // 全部读取完成，返回最终的 MD5 字符串
   }
-}
+};
 ```
 
 > 即使采用了增量计算，哈希计算仍然是计算密集型任务，默认在主线程运行。为了彻底消除计算过程对 UI 的影响，实现真正的非阻塞用户体验，建议将整个 MD5 计算逻辑转移到 **[Web Worker](https://blog.zsdy.dev/posts/web-worker-beginners-guide)** 中执行。Worker 独立于主线程运行，可以确保计算期间 UI 依然流畅，并能更好地利用多核 CPU 的性能。
@@ -137,10 +137,10 @@ fileReader.onload = (e) => {
 
 ```ts
 // app/api/upload/check/route.ts
-const existingPath = await findInIndex(md5)
+const existingPath = await findInIndex(md5);
 if (existingPath) {
   // ... 验证文件存在性 ...
-  return NextResponse.json({ exists: true, path: existingPath })
+  return NextResponse.json({ exists: true, path: existingPath });
 }
 ```
 
@@ -160,17 +160,17 @@ if (existingPath) {
 
 ```ts
 // hooks/useFileUpload.ts
-const checkResult = await checkFile(md5, file.name)
+const checkResult = await checkFile(md5, file.name);
 // 获取服务器已有的分片列表
-const uploadedChunks = checkResult.uploadedChunks || []
-const totalChunks = fileItem.totalChunks
+const uploadedChunks = checkResult.uploadedChunks || [];
+const totalChunks = fileItem.totalChunks;
 // 过滤出还需要上传的分片索引
 const chunksToUpload = Array.from({ length: totalChunks }, (_, i) => i).filter(
   (i) => !uploadedChunks.includes(i),
-)
+);
 
 // 执行并发上传
-await uploadChunksWithConcurrency(chunksToUpload, md5)
+await uploadChunksWithConcurrency(chunksToUpload, md5);
 ```
 
 ## 分片上传
@@ -192,21 +192,21 @@ await uploadChunksWithConcurrency(chunksToUpload, md5)
 ```ts
 // hooks/useFileUpload.ts
 const uploadChunksWithConcurrency = async (chunks: number[], md5: string) => {
-  const concurrency = 3
-  let index = 0 // 共享任务指针
+  const concurrency = 3;
+  let index = 0; // 共享任务指针
 
   const uploadNext = async () => {
     // 只要还有任务，就持续领取并执行
     while (index < chunks.length) {
       // 获取当前要处理的 chunkIndex
-      const chunkIndex = chunks[index++]
-      await uploadChunk(file, { md5, chunkIndex /* ... */ })
+      const chunkIndex = chunks[index++];
+      await uploadChunk(file, { md5, chunkIndex /* ... */ });
     }
-  }
+  };
 
   // 启动 3 个并发 Worker
-  await Promise.all(Array.from({ length: concurrency }, uploadNext))
-}
+  await Promise.all(Array.from({ length: concurrency }, uploadNext));
+};
 ```
 
 ## 分片合并与索引更新
@@ -226,25 +226,25 @@ const uploadChunksWithConcurrency = async (chunks: number[], md5: string) => {
 
 ```ts
 // app/api/upload/merge/route.ts
-const writeStream = fs.createWriteStream(targetPath)
+const writeStream = fs.createWriteStream(targetPath);
 
 for (let i = 0; i < totalChunks; i++) {
-  const chunkPath = path.join(tempDir, `${i}.chunk`)
+  const chunkPath = path.join(tempDir, `${i}.chunk`);
   await new Promise((resolve, reject) => {
-    const readStream = fs.createReadStream(chunkPath)
+    const readStream = fs.createReadStream(chunkPath);
     // 写流，{ end: false } 防止读流结束时自动关闭写流
-    readStream.pipe(writeStream, { end: false })
+    readStream.pipe(writeStream, { end: false });
     // 读流结束，表示当前 chunk 写入完成，resolve 进入下一个循环
-    rs.on("end", resolve)
+    rs.on("end", resolve);
     // 读流发生错误
     rs.on("error", (err) => {
-      writeStream.destroy(err)
-      reject(err)
-    })
-  })
+      writeStream.destroy(err);
+      reject(err);
+    });
+  });
 }
 
-writeStream.end() // 手动关闭
+writeStream.end(); // 手动关闭
 ```
 
 ### 索引并发锁
@@ -261,27 +261,27 @@ writeStream.end() // 手动关闭
 
 ```ts
 // libs/file-index.ts
-let indexWritePromise: Promise<void> = Promise.resolve()
+let indexWritePromise: Promise<void> = Promise.resolve();
 
 export async function addToIndex(md5: string, filePath: string): Promise<void> {
   const newOperation = indexWritePromise
     .then(async () => {
       // 1. 读取
-      const index = await readFileIndex()
+      const index = await readFileIndex();
 
       // 2. 修改
-      index[md5] = filePath
+      index[md5] = filePath;
 
       // 3. 写入
-      await writeFileIndex(index)
+      await writeFileIndex(index);
     })
     .catch((error) => {
-      console.error("写入索引失败:", error)
-    })
+      console.error("写入索引失败:", error);
+    });
 
   // 更新全局 Promise 链，确保下一个 addToIndex 等待当前这个操作完成
-  indexWritePromise = newOperation
+  indexWritePromise = newOperation;
 
-  return newOperation
+  return newOperation;
 }
 ```

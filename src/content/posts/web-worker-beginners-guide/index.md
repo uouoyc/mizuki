@@ -48,23 +48,23 @@ Web Worker 的通信模型基于消息传递（message passing），这是一种
 
 ```js
 // main.js
-const worker = new Worker("worker.js")
-worker.postMessage({ type: "sum", numbers: [1, 2, 3, 4] })
+const worker = new Worker("worker.js");
+worker.postMessage({ type: "sum", numbers: [1, 2, 3, 4] });
 
 worker.onmessage = (e) => {
-  console.log("结果:", e.data)
-}
+  console.log("结果:", e.data);
+};
 ```
 
 ```js
 // worker.js
 self.onmessage = (e) => {
-  const { type, numbers } = e.data
+  const { type, numbers } = e.data;
   if (type === "sum") {
-    const result = numbers.reduce((a, b) => a + b, 0)
-    self.postMessage(result)
+    const result = numbers.reduce((a, b) => a + b, 0);
+    self.postMessage(result);
   }
-}
+};
 ```
 
 在上面的案例中，`postMessage()` 不是引用传递，而是使用[结构化克隆算法](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)对数据进行深拷贝。这意味着：
@@ -90,28 +90,28 @@ Worker 运行时如果出错，主线程可以通过 `onerror` 事件捕获。�
 
 ```js
 // main.js
-const worker = new Worker("worker.js")
+const worker = new Worker("worker.js");
 
 worker.onerror = (err) => {
-  console.error(`Worker 错误: ${err.message}`)
-  console.error(`文件: ${err.filename}`)
-  console.error(`行号: ${err.lineno}`)
+  console.error(`Worker 错误: ${err.message}`);
+  console.error(`文件: ${err.filename}`);
+  console.error(`行号: ${err.lineno}`);
 
-  err.preventDefault()
-}
+  err.preventDefault();
+};
 
-worker.postMessage({ type: "calculate", value: 100 })
+worker.postMessage({ type: "calculate", value: 100 });
 ```
 
 ```js
 // worker.js
 self.onmessage = (e) => {
-  const { type, value } = e.data
+  const { type, value } = e.data;
 
   if (type === "calculate") {
-    throw new Error("计算过程中发生错误")
+    throw new Error("计算过程中发生错误");
   }
-}
+};
 ```
 
 ### 关闭 Worker
@@ -129,28 +129,28 @@ Worker 提供两种关闭方式：
 
 ```js
 // worker.js
-importScripts("utils.js")
+importScripts("utils.js");
 
 self.onmessage = (e) => {
-  const { numbers } = e.data
+  const { numbers } = e.data;
 
   const result = {
     sum: sum(numbers),
     average: average(numbers),
-  }
+  };
 
-  self.postMessage(result)
-}
+  self.postMessage(result);
+};
 ```
 
 ```js
 // utils.js
 function sum(arr) {
-  return arr.reduce((a, b) => a + b, 0)
+  return arr.reduce((a, b) => a + b, 0);
 }
 
 function average(arr) {
-  return sum(arr) / arr.length
+  return sum(arr) / arr.length;
 }
 ```
 
@@ -184,15 +184,15 @@ function average(arr) {
 
 ```js
 // main.js
-const sharedWorker = new SharedWorker("shared-worker.js")
-const port = sharedWorker.port
+const sharedWorker = new SharedWorker("shared-worker.js");
+const port = sharedWorker.port;
 
 // 使用 onmessage 会自动启动端口
 port.onmessage = (e) => {
-  console.log("收到:", e.data)
-}
+  console.log("收到:", e.data);
+};
 
-port.postMessage("Hello from page")
+port.postMessage("Hello from page");
 
 // 若使用 addEventListener，则必须手动启动
 // port.addEventListener("message", (e) => {
@@ -203,17 +203,17 @@ port.postMessage("Hello from page")
 
 ```js
 // shared-worker.js
-const ports = []
+const ports = [];
 
 self.onconnect = (e) => {
-  const port = e.ports[0]
-  ports.push(port)
+  const port = e.ports[0];
+  ports.push(port);
 
   port.onmessage = (msg) => {
     // 广播给所有连接
-    ports.forEach((p) => p.postMessage(`[广播] ${msg.data}`))
-  }
-}
+    ports.forEach((p) => p.postMessage(`[广播] ${msg.data}`));
+  };
+};
 ```
 
 为什么需要 `port.start()`？
@@ -236,28 +236,28 @@ Shared Worker 的生命周期管理相对复杂：
 
 ```js
 // shared-worker.js
-const ports = new Set()
+const ports = new Set();
 
 self.onconnect = (e) => {
-  const port = e.ports[0]
-  ports.add(port)
+  const port = e.ports[0];
+  ports.add(port);
 
   port.onmessage = (msg) => {
     ports.forEach((p) => {
       try {
-        p.postMessage(msg.data)
+        p.postMessage(msg.data);
       } catch (err) {
         // 端口已关闭，从集合中移除
-        ports.delete(p)
+        ports.delete(p);
       }
-    })
-  }
+    });
+  };
 
   // 监听端口关闭
   port.onmessageerror = () => {
-    ports.delete(port)
-  }
-}
+    ports.delete(port);
+  };
+};
 ```
 
 ### 调试技巧
@@ -287,51 +287,51 @@ Shared Worker 的 `console.log` 不会出现在主页面控制台。
 // main.js
 class WorkerPromise {
   constructor(url) {
-    this.worker = new Worker(url)
-    this.handlers = new Map()
-    this.id = 0
+    this.worker = new Worker(url);
+    this.handlers = new Map();
+    this.id = 0;
 
     this.worker.onmessage = ({ data }) => {
-      const { id, result, error } = data
-      const handler = this.handlers.get(id)
+      const { id, result, error } = data;
+      const handler = this.handlers.get(id);
       if (handler) {
-        this.handlers.delete(id)
-        error ? handler.reject(new Error(error)) : handler.resolve(result)
+        this.handlers.delete(id);
+        error ? handler.reject(new Error(error)) : handler.resolve(result);
       }
-    }
+    };
 
     this.worker.onerror = (err) => {
-      console.error("Worker 错误:", err)
+      console.error("Worker 错误:", err);
       // 拒绝所有待处理的 Promise
-      this.handlers.forEach((h) => h.reject(err))
-      this.handlers.clear()
-    }
+      this.handlers.forEach((h) => h.reject(err));
+      this.handlers.clear();
+    };
   }
 
   call(payload) {
     return new Promise((resolve, reject) => {
-      const id = this.id++
-      this.handlers.set(id, { resolve, reject })
-      this.worker.postMessage({ id, payload })
-    })
+      const id = this.id++;
+      this.handlers.set(id, { resolve, reject });
+      this.worker.postMessage({ id, payload });
+    });
   }
 
   terminate() {
-    this.worker.terminate()
-    this.handlers.clear()
+    this.worker.terminate();
+    this.handlers.clear();
   }
 }
 
 // 使用示例
-const wp = new WorkerPromise("worker.js")
+const wp = new WorkerPromise("worker.js");
 
 // 可以使用 async/await
 async function calculate() {
   try {
-    const result = await wp.call(12345)
-    console.log("平方结果:", result)
+    const result = await wp.call(12345);
+    console.log("平方结果:", result);
   } catch (err) {
-    console.error("计算失败:", err)
+    console.error("计算失败:", err);
   }
 }
 ```
@@ -339,15 +339,15 @@ async function calculate() {
 ```js
 // worker.js
 self.onmessage = (e) => {
-  const { id, payload: n } = e.data
+  const { id, payload: n } = e.data;
 
   try {
-    const result = n * n
-    self.postMessage({ id, result })
+    const result = n * n;
+    self.postMessage({ id, result });
   } catch (error) {
-    self.postMessage({ id, error: error.message })
+    self.postMessage({ id, error: error.message });
   }
-}
+};
 ```
 
 这种封装的优势：
@@ -365,30 +365,30 @@ self.onmessage = (e) => {
 
 ```js
 // main.js
-const buffer = new ArrayBuffer(100 * 1024 * 1024) // 100MB
+const buffer = new ArrayBuffer(100 * 1024 * 1024); // 100MB
 
 // 第二个参数是要转移的对象数组
-worker.postMessage(buffer, [buffer])
+worker.postMessage(buffer, [buffer]);
 
 // 转移后，原始 buffer 不可再使用
-console.log(buffer.byteLength) // 0
+console.log(buffer.byteLength); // 0
 ```
 
 ```js
 // worker.js
 self.onmessage = (e) => {
-  const buf = e.data
-  console.log("收到的 buffer 大小:", buf.byteLength)
+  const buf = e.data;
+  console.log("收到的 buffer 大小:", buf.byteLength);
 
   // 处理数据...
-  const view = new Uint8Array(buf)
+  const view = new Uint8Array(buf);
   for (let i = 0; i < view.length; i++) {
-    view[i] = i % 256
+    view[i] = i % 256;
   }
 
   // 可以转移回主线程
-  self.postMessage(buf, [buf])
-}
+  self.postMessage(buf, [buf]);
+};
 ```
 
 注意事项：
@@ -408,29 +408,29 @@ self.onmessage = (e) => {
 
 ```js
 // main.js
-const worker = new Worker("worker.js", { type: "module" })
+const worker = new Worker("worker.js", { type: "module" });
 ```
 
 ```js
 // utils.js
-export const sum = (arr) => arr.reduce((a, b) => a + b, 0)
+export const sum = (arr) => arr.reduce((a, b) => a + b, 0);
 
-export const multiply = (a, b) => a * b
+export const multiply = (a, b) => a * b;
 ```
 
 ```js
 // worker.js
-import { multiply, sum } from "./utils.js"
+import { multiply, sum } from "./utils.js";
 
 self.onmessage = (e) => {
-  const { type, data } = e.data
+  const { type, data } = e.data;
 
   if (type === "sum") {
-    self.postMessage(sum(data))
+    self.postMessage(sum(data));
   } else if (type === "multiply") {
-    self.postMessage(multiply(data[0], data[1]))
+    self.postMessage(multiply(data[0], data[1]));
   }
-}
+};
 ```
 
 #### 注意事项
@@ -445,7 +445,7 @@ self.onmessage = (e) => {
 // 使用 new URL 确保路径在打包后仍正确
 const worker = new Worker(new URL("./worker.js", import.meta.url), {
   type: "module",
-})
+});
 ```
 
 ## 关于线程安全
@@ -492,16 +492,16 @@ Cross-Origin-Opener-Policy: same-origin
 
 ```js
 // main.js
-const myWorker = new Worker("worker.js")
+const myWorker = new Worker("worker.js");
 
 if (crossOriginIsolated) {
   // 可以使用 SharedArrayBuffer
-  const buffer = new SharedArrayBuffer(16)
-  myWorker.postMessage(buffer)
+  const buffer = new SharedArrayBuffer(16);
+  myWorker.postMessage(buffer);
 } else {
   // 回退到普通 ArrayBuffer
-  const buffer = new ArrayBuffer(16)
-  myWorker.postMessage(buffer)
+  const buffer = new ArrayBuffer(16);
+  myWorker.postMessage(buffer);
 }
 ```
 
@@ -509,26 +509,26 @@ if (crossOriginIsolated) {
 
 ```js
 // main.js
-const sab = new SharedArrayBuffer(1024)
-const view = new Int32Array(sab)
+const sab = new SharedArrayBuffer(1024);
+const view = new Int32Array(sab);
 
-worker.postMessage(sab)
+worker.postMessage(sab);
 
 // 原子操作
-Atomics.add(view, 0, 5)
-console.log(Atomics.load(view, 0)) // 5
+Atomics.add(view, 0, 5);
+console.log(Atomics.load(view, 0)); // 5
 ```
 
 ```js
 // worker.js
 self.onmessage = (e) => {
-  const sab = e.data
-  const view = new Int32Array(sab)
+  const sab = e.data;
+  const view = new Int32Array(sab);
 
   // 原子操作
-  Atomics.add(view, 0, 10)
-  console.log(Atomics.load(view, 0)) // 15
-}
+  Atomics.add(view, 0, 10);
+  console.log(Atomics.load(view, 0)); // 15
+};
 ```
 
 注意事项：`SharedArrayBuffer` 本身不是可转移对象，它通过 `postMessage` 传递时会在接收端创建一个新的 `SharedArrayBuffer` 对象，但两者引用的是同一块共享内存。
@@ -564,9 +564,9 @@ Content-Security-Policy: script-src 'self'
 // worker.js
 self.onmessage = (e) => {
   // 这在 Worker 中是允许的（如果 worker.js 没有设置 CSP）
-  const result = eval(e.data)
-  self.postMessage(result)
-}
+  const result = eval(e.data);
+  self.postMessage(result);
+};
 ```
 
 ### 安全建议
@@ -628,56 +628,61 @@ Content-Security-Policy: worker-src 'self' https://example.com
 
 ```js
 // main.js
-const worker = new Worker("worker.js")
-const originalCanvas = document.getElementById("original")
-const processedCanvas = document.getElementById("processed")
-const originalCtx = originalCanvas.getContext("2d")
-const processedCtx = processedCanvas.getContext("2d")
+const worker = new Worker("worker.js");
+const originalCanvas = document.getElementById("original");
+const processedCanvas = document.getElementById("processed");
+const originalCtx = originalCanvas.getContext("2d");
+const processedCtx = processedCanvas.getContext("2d");
 
 worker.onmessage = (e) => {
-  const processed = e.data
-  processedCtx.putImageData(processed, 0, 0)
-}
+  const processed = e.data;
+  processedCtx.putImageData(processed, 0, 0);
+};
 
 function loadImage() {
   // 创建一个彩色渐变图像作为示例
-  const width = originalCanvas.width
-  const height = originalCanvas.height
+  const width = originalCanvas.width;
+  const height = originalCanvas.height;
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
-      const r = (x / width) * 255
-      const g = (y / height) * 255
-      const b = 128
-      originalCtx.fillStyle = `rgb(${r}, ${g}, ${b})`
-      originalCtx.fillRect(x, y, 1, 1)
+      const r = (x / width) * 255;
+      const g = (y / height) * 255;
+      const b = 128;
+      originalCtx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+      originalCtx.fillRect(x, y, 1, 1);
     }
   }
 }
 
 function processImage() {
-  const imageData = originalCtx.getImageData(0, 0, originalCanvas.width, originalCanvas.height)
+  const imageData = originalCtx.getImageData(
+    0,
+    0,
+    originalCanvas.width,
+    originalCanvas.height,
+  );
 
-  worker.postMessage({ imageData: imageData }, [imageData.data.buffer])
+  worker.postMessage({ imageData: imageData }, [imageData.data.buffer]);
 }
 ```
 
 ```js
 // worker.js
 self.onmessage = (e) => {
-  const imageData = e.data.imageData
-  const data = imageData.data
+  const imageData = e.data.imageData;
+  const data = imageData.data;
 
   // 灰度化处理
   for (let i = 0; i < data.length; i += 4) {
-    const avg = (data[i] + data[i + 1] + data[i + 2]) / 3
-    data[i] = avg
-    data[i + 1] = avg
-    data[i + 2] = avg
+    const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+    data[i] = avg;
+    data[i + 1] = avg;
+    data[i + 2] = avg;
   }
 
-  self.postMessage(imageData, [imageData.data.buffer])
-}
+  self.postMessage(imageData, [imageData.data.buffer]);
+};
 ```
 
 ### 大数据计算
@@ -707,54 +712,54 @@ self.onmessage = (e) => {
 
 ```js
 // main.js
-const worker = new Worker("worker.js", { type: "module" })
-const resultEl = document.getElementById("result")
+const worker = new Worker("worker.js", { type: "module" });
+const resultEl = document.getElementById("result");
 
 async function calculatePrimes() {
-  const max = parseInt(document.getElementById("maxInput").value)
+  const max = parseInt(document.getElementById("maxInput").value);
 
-  resultEl.textContent = `正在计算 ${max} 以内的质数...\n（主线程不会被阻塞，你可以继续操作页面）`
+  resultEl.textContent = `正在计算 ${max} 以内的质数...\n（主线程不会被阻塞，你可以继续操作页面）`;
 
-  const start = performance.now()
+  const start = performance.now();
 
-  worker.postMessage({ task: "primes", max })
+  worker.postMessage({ task: "primes", max });
 
   worker.onmessage = (e) => {
-    const primes = e.data
-    const time = performance.now() - start
+    const primes = e.data;
+    const time = performance.now() - start;
 
-    resultEl.textContent = `找到 ${primes.length} 个质数\n`
-    resultEl.textContent += `耗时: ${time.toFixed(2)}ms\n\n`
-    resultEl.textContent += `前 20 个质数: ${primes.slice(0, 20).join(", ")}...\n`
-    resultEl.textContent += `最后 10 个质数: ${primes.slice(-10).join(", ")}`
-  }
+    resultEl.textContent = `找到 ${primes.length} 个质数\n`;
+    resultEl.textContent += `耗时: ${time.toFixed(2)}ms\n\n`;
+    resultEl.textContent += `前 20 个质数: ${primes.slice(0, 20).join(", ")}...\n`;
+    resultEl.textContent += `最后 10 个质数: ${primes.slice(-10).join(", ")}`;
+  };
 }
 ```
 
 ```js
 // worker.js
 function findPrimes(max) {
-  const primes = []
-  const isPrime = new Array(max + 1).fill(true)
+  const primes = [];
+  const isPrime = new Array(max + 1).fill(true);
 
   for (let i = 2; i <= max; i++) {
     if (isPrime[i]) {
-      primes.push(i)
+      primes.push(i);
       for (let j = i * i; j <= max; j += i) {
-        isPrime[j] = false
+        isPrime[j] = false;
       }
     }
   }
 
-  return primes
+  return primes;
 }
 
 self.onmessage = (e) => {
-  const { task, max } = e.data
+  const { task, max } = e.data;
 
   if (task === "primes") {
-    const result = findPrimes(max)
-    self.postMessage(result)
+    const result = findPrimes(max);
+    self.postMessage(result);
   }
-}
+};
 ```

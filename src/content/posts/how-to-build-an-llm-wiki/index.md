@@ -3,7 +3,7 @@ title: "不用向量数据库，如何搭建一个由 LLM 自动维护的个人 
 published: 2026-07-10
 description: "如何搭建一个由 LLM 自动整理和维护的个人 Wiki，将原始资料持续编译为结构化、可追溯、可增长的知识库，而不依赖传统 RAG 流程。"
 image: "./cover.webp"
-tags: ["agent", "llm", "wiki", "rag"]
+tags: ["ai agent", "llm", "wiki", "rag"]
 category: "学习笔记"
 draft: false
 lang: "zh-CN"

@@ -69,23 +69,23 @@ pnpm add -D prettier @trivago/prettier-plugin-sort-imports
 - 当值为 `true` 时：
 
 ```tsx
-import { useState } from "react"
-import axios from "axios"
-import dayjs from "dayjs"
-import Link from "next/link"
+import { useState } from "react";
+import axios from "axios";
+import dayjs from "dayjs";
+import Link from "next/link";
 
-import Header from "@/components/Header"
+import Header from "@/components/Header";
 ```
 
 - 当值为 `false` 时：
 
 ```tsx
-import { useState } from "react"
-import axios from "axios"
-import dayjs from "dayjs"
-import Link from "next/link"
+import { useState } from "react";
+import axios from "axios";
+import dayjs from "dayjs";
+import Link from "next/link";
 
-import Header from "@/components/Header"
+import Header from "@/components/Header";
 ```
 
 **importOrderSortSpecifiers**：会按字母顺序对单个导入语句中的命名导入进行排序。
@@ -93,13 +93,13 @@ import Header from "@/components/Header"
 - 当值为 `true` 时：
 
 ```tsx
-import { useEffect, useRef, useState, useTransition } from "react"
+import { useEffect, useRef, useState, useTransition } from "react";
 ```
 
 - 当值为 `false` 时：
 
 ```tsx
-import { useEffect, useRef, useState, useTransition } from "react"
+import { useEffect, useRef, useState, useTransition } from "react";
 ```
 
 ## 使用注意
@@ -109,6 +109,9 @@ import { useEffect, useRef, useState, useTransition } from "react"
 ```json
 // .prettierrc
 {
-  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"]
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ]
 }
 ```
