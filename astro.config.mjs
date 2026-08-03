@@ -237,6 +237,7 @@ export default defineConfig({
 	],
 	markdown: {
 		processor: unified({
+			smartypants: { quotes: false },
 			remarkPlugins: [
 				remarkMath,
 				remarkContent,
