@@ -117,7 +117,7 @@ if (entry.data.image) {
 	if (isLocal) {
 		const basePath = getFileDirFromPath(entry.filePath || "");
 		const files = import.meta.glob<ImageMetadata>(
-			"../../**/*.{jpg,jpeg,png,gif,webp,avif,svg}",
+			["../../**", "!../../**/*.excalidraw"],
 			{
 				import: "default",
 			},
@@ -169,7 +169,7 @@ if (profileConfig.avatar) {
 	);
 	if (isLocal) {
 		const files = import.meta.glob<ImageMetadata>(
-			"../../**/*.{jpg,jpeg,png,gif,webp,avif,svg}",
+			["../../**", "!../../**/*.excalidraw"],
 			{
 				import: "default",
 			},

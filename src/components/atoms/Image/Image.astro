@@ -61,7 +61,7 @@ const isPublic = src.startsWith("/");
 let img: ImageMetadata | undefined;
 if (isLocal) {
 	const files = import.meta.glob<ImageMetadata>(
-		"../../../**/*.{jpg,jpeg,png,gif,webp,avif,svg}",
+		["../../../**", "!../../../**/*.excalidraw"],
 		{ import: "default" },
 	);
 	const normalizedPath = path
