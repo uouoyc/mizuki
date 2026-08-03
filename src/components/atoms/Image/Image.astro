@@ -60,9 +60,10 @@ const isPublic = src.startsWith("/");
 // https://github.com/withastro/astro/issues/3373
 let img: ImageMetadata | undefined;
 if (isLocal) {
-	const files = import.meta.glob<ImageMetadata>("../../../**", {
-		import: "default",
-	});
+	const files = import.meta.glob<ImageMetadata>(
+		"../../../**/*.{jpg,jpeg,png,gif,webp,avif,svg}",
+		{ import: "default" },
+	);
 	const normalizedPath = path
 		.normalize(path.join("../../../", basePath, src))
 		.replace(/\\/g, "/");
