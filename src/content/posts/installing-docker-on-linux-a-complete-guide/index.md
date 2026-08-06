@@ -2,7 +2,7 @@
 title: "Linux 安装 Docker 完整教程"
 published: 2025-08-09
 description: "在 Linux 上快速安装 Docker，包括了 CentOS 和 Ubuntu 的安装步骤，以及 Docker-Compose 和 Docker-Registry 的配置方法。"
-image: "./cover.webp"
+image: "./assets/cover.webp"
 tags: ["linux", "docker", "docker compose", "docker registry"]
 category: "学习笔记"
 draft: false

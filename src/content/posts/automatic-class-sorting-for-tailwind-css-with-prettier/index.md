@@ -2,7 +2,7 @@
 title: "使用 Prettier 自动排序 Tailwind CSS 类名"
 published: 2025-08-16
 description: "在项目中使用 Prettier 自动排序 Tailwind CSS 类名，提升代码可读性和一致性。"
-image: "./cover.webp"
+image: "./assets/cover.webp"
 tags: ["tailwind css", "prettier"]
 category: "学习笔记"
 draft: false
@@ -49,7 +49,7 @@ pnpm add -D prettier prettier-plugin-tailwindcss
 
 为了方便起见，你也可以在 `VS Code` 中安装 `Prettier - Code formatter` 插件，这样每次写完一部分样式就可以使用快捷键进行格式化。
 
-![preview-1](./preview-1.gif)
+![Prettier 自动排序 Tailwind CSS 类名](./assets/preview-1.gif)
 
 ## 对函数调用中的类进行排序
 
@@ -64,4 +64,4 @@ pnpm add -D prettier prettier-plugin-tailwindcss
 
 这样，Prettier 就会在格式化时自动对 `clsx` 函数中的类名进行排序。
 
-![preview-2](./preview-2.gif)
+![Prettier 自动排序 clsx 函数中的 Tailwind CSS 类名](./assets/preview-2.gif)

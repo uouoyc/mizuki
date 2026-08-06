@@ -2,7 +2,7 @@
 title: "使用 Docker 部署 OpenClaw 完整指南"
 published: 2026-03-16
 description: "OpenClaw 是一个强大的 AI Agent 框架，支持多渠道接入（Telegram、QQ、飞书等）。本文将详细介绍如何使用 Docker Compose 在 Linux 服务器上部署 OpenClaw，并接入 QQ 机器人。"
-image: "./cover.webp"
+image: "./assets/cover.webp"
 tags: ["docker", "docker compose", "openclaw"]
 category: "学习笔记"
 draft: false
@@ -270,7 +270,7 @@ SSH 隧道建立后，在本地浏览器打开：`http://127.0.0.1:18789`
 
 首次登录时，会遇到 `pairing required` 错误：
 
-![preview-1](./preview-1.webp)
+![OpenClaw 网关登录界面的 pairing required 错误](./assets/preview-1.webp)
 
 这是 OpenClaw 的安全机制，需要手动批准连接请求。
 
@@ -284,7 +284,7 @@ docker compose exec openclaw-gateway openclaw devices list
 docker compose exec openclaw-gateway openclaw devices approve --latest
 ```
 
-![preview-2](./preview-2.webp)
+![在终端查看并批准 OpenClaw 设备配对请求](./assets/preview-2.webp)
 
 > **`devices` 命令详解**：
 >
@@ -304,11 +304,11 @@ docker compose exec openclaw-gateway openclaw devices approve --latest
 
 访问 [QQ 开放平台](https://q.qq.com/qqbot/openclaw/login.html)：
 
-![preview-3](./preview-3.webp)
+![QQ 开放平台登录界面](./assets/preview-3.webp)
 
 点击创建机器人：
 
-![preview-4](./preview-4.webp)
+![QQ 开放平台的机器人管理和创建](./assets/preview-4.webp)
 
 ### 步骤 2：安装 QQ 机器人插件
 

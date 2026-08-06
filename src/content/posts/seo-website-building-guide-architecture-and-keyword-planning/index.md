@@ -2,7 +2,7 @@
 title: "SEO 建站指南：网站架构与关键词规划"
 published: 2026-06-03
 description: "面向建站新手的 SEO 结构规划指南，涵盖网站架构三层模型、关键词挖掘与清洗、Keyword Map 设计以及建站 SOP。"
-image: "./cover.webp"
+image: "./assets/cover.webp"
 tags: ["seo"]
 category: "学习笔记"
 draft: false

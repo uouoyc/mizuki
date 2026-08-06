@@ -2,7 +2,7 @@
 title: "Cloudflare 发布 Agent Readiness 工具：一键检测你的网站对 AI 代理够不够友好"
 published: 2026-04-18
 description: "Cloudflare 推出免费工具 isitagentready，可用于检测网站对于 AI 代理的友好度。涵盖可发现性、内容可访问性、协议发现等五大维度，并提供可直接复制的优化提示词。"
-image: "./cover.webp"
+image: "./assets/cover.webp"
 tags: ["seo", "geo", "cloudflare", "agent readiness"]
 category: "行业动态"
 draft: false
@@ -13,7 +13,7 @@ Cloudflare 于 2026 年 4 月 17 日正式上线免费工具：[isitagentready](
 
 这是一个网站 AI 代理友好度检测工具。它可以帮助你评估站点是否适合 AI 代理（Agentic AI）访问、理解和交互。
 
-![preview-1](./preview-1.png)
+![Cloudflare 发布 isitagentready 网站检测工具的公告](./assets/preview-1.webp)
 
 ## 扫描模式
 
@@ -23,7 +23,7 @@ Cloudflare 于 2026 年 4 月 17 日正式上线免费工具：[isitagentready](
 - Content Site：适用于博客、文档、营销网站等以内容为主的站点。
 - API / Application：适用于提供 API 服务或复杂 Web 应用的站点。
 
-![preview-2](./preview-2.png)
+![isitagentready 选择站点类型以及检测维度](./assets/preview-2.webp)
 
 工具将检测分为五个维度：
 
@@ -37,11 +37,11 @@ Cloudflare 于 2026 年 4 月 17 日正式上线免费工具：[isitagentready](
 
 检测完成后，isitagentready 会给出网站的整体评分（0～100）以及各维度的诊断结果。它还会针对未通过的检查项生成可直接用于优化的提示词，帮助站长修复网站。
 
-![preview-3](./preview-3.png)
+![isitagentready 的诊断结果](./assets/preview-3.webp)
 
 例如，当检测到网站的 robots.txt 中缺少针对 AI 内容使用偏好的声明时，isitagentready 就会提供一段可用于优化的提示词。你只需要将该提示词复制并粘贴到你的 AI Agent 中，即可由 AI 自动完成相应的修复与配置调整。
 
-![preview-4](./preview-4.png)
+![isitagentready 针对 robots.txt 内容信号生成的提示词](./assets/preview-4.webp)
 
 ## 为什么要关注 Agent Readiness
 

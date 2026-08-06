@@ -2,7 +2,7 @@
 title: "Web Worker 使用教程"
 published: 2025-11-09
 description: "了解什么是 Web Worker 及其工作原理，学习如何在前端项目中使用 Web Worker 来提升性能和用户体验。"
-image: "./cover.webp"
+image: "./assets/cover.webp"
 tags: ["web worker"]
 category: "学习笔记"
 draft: false

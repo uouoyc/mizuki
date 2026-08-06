@@ -2,7 +2,7 @@
 title: "使用 Prettier 对 Import 进行排序"
 published: 2025-08-24
 description: "使用 Prettier 来自动排序 JavaScript/TypeScript 文件中的 import 语句。"
-image: "./cover.webp"
+image: "./assets/cover.webp"
 tags: ["prettier"]
 category: "学习笔记"
 draft: false

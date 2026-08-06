@@ -2,7 +2,7 @@
 title: "使用 Scoop+Mise 搭建统一的 Windows 开发环境"
 published: 2026-02-03
 description: "使用 Scoop 和 Mise 在 Windows 上搭建一个非侵入式、版本隔离且代码化的开发环境。"
-image: "./cover.webp"
+image: "./assets/cover.webp"
 tags: ["windows", "scoop", "mise"]
 category: "学习笔记"
 draft: false
@@ -97,7 +97,7 @@ Import-Module PSCompletions
 psc add git scoop
 ```
 
-![preview-1](./preview-1.gif)
+![使用 psc 命令批量添加命令补全](./assets/preview-1.gif)
 
 ### 新电脑快速配置
 

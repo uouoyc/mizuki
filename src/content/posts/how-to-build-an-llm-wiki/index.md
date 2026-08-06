@@ -2,7 +2,7 @@
 title: "不用向量数据库，如何搭建一个由 LLM 自动维护的个人 Wiki"
 published: 2026-07-10
 description: "如何搭建一个由 LLM 自动整理和维护的个人 Wiki，将原始资料持续编译为结构化、可追溯、可增长的知识库，而不依赖传统 RAG 流程。"
-image: "./cover.webp"
+image: "./assets/cover.webp"
 tags: ["ai agent", "llm", "wiki", "rag"]
 category: "学习笔记"
 draft: false
@@ -957,7 +957,7 @@ npm run tauri build    # Production build
 
 项目提供多种场景模板：
 
-![preview-1](./preview-1.webp)
+![LLM Wiki 新建项目时选择场景模板](./assets/preview-1.webp)
 
 每个模板会预先生成适合对应场景的 `purpose.md` 和 `schema.md`。
 
@@ -967,7 +967,7 @@ npm run tauri build    # Production build
 
 项目创建完成后，首先进入 Settings 页面配置模型。
 
-![preview-2](./preview-2.webp)
+![LLM Wiki 的 LLM Provider 配置](./assets/preview-2.webp)
 
 如果资料包含敏感信息，可以使用本地模型。
 

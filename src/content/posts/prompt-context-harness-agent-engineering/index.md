@@ -2,7 +2,7 @@
 title: "Prompt、Context 与 Harness：AI Agent 工程化的三层视角"
 published: 2026-08-03
 description: "从提示词、上下文编排到 Agent 运行环境，梳理 Prompt、Context 与 Harness 三种工程视角及其边界。"
-image: "./cover.webp"
+image: "./assets/cover.webp"
 tags:
   [
     "ai agent",
@@ -82,7 +82,7 @@ Agent 会在执行过程中不断产生潜在相关信息，因此 Context 需�
 
 这四类操作不是正式标准，也不是互斥选项。它们提供了一组实用的检查角度：重要状态有没有保存，取回的信息是否相关，历史是否需要压缩，不同任务是否应该共享同一个上下文。
 
-![preview-1](./preview-1.webp)
+![Prompt、Context 与 Harness Engineering 的工程控制范围示意图](./assets/preview-1.webp)
 
 ## Harness Engineering：控制 Agent 如何行动
 
@@ -124,7 +124,7 @@ Feedback 是执行后的反馈。测试失败、类型错误、浏览器截图�
 
 前馈和反馈需要同时存在。只有规则没有验证，系统无法知道规则是否生效；只有失败反馈没有事前约束，Agent 可能在过大的解空间中反复试错。反馈结果被送回下一轮推理后，又会成为下一轮行动的前馈信息。
 
-![preview-2](./preview-2.webp)
+![Harness Engineering 的 Agent 执行与反馈闭环示意图](./assets/preview-2.webp)
 
 ## 长任务暴露了 Context 与 Harness 的边界
 
